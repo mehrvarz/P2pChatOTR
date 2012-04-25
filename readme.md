@@ -35,7 +35,7 @@ Running P2pChatSMP
 
 A `run` script is provided to save you from classpath issues. `run` uses the Scala runtime to execute the specified class. Two instances of P2pChatSMP need to run in parallel, so they can connect to each other and transfer data back and forth. Running both instances on the same machine is possible, but the purpose of this application is to bridge clients located behind firewals. Example setup: two PC's, one connected via DSL, one connected via 3G-card or via smartphone tethering. 
 
-How the two instance may be started:
+How the two instances may be started:
 
     ./run timur.p2pChatSMP.P2pChatSMP alice.msn.com msn bob@msn.com
     ./run timur.p2pChatSMP.P2pChatSMP bob.msn.com msn alice@msn.com
