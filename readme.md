@@ -1,7 +1,7 @@
 P2pChatSMP - Peer-to-peer Chat
 ==============================
 
-P2pChatSMP is a P2P console chat application for clients located behind firewalls. It supports Off-the-Record Messaging and the Socialist Millionairs' Protocol.
+P2pChatSMP is a P2P console chat application for clients located behind firewalls. It supports Off-the-Record Messaging and the Socialist Millionairs' Protocol implemented by Java-OTR.
 
 
 System requirements
@@ -27,18 +27,20 @@ The `make` script will work in three steps:
 
   1. compile Java-OTR classes in src/ca/ using ant
   2. compile P2pChatSMP classes in src/*.scala using scalac
-  3. create P2pChatSMP.jar by running ./makejar script using the JDK jar
+  3. create P2pChatSMP.jar by running ./makejar script using the JDK jar tool
 
 
-Running P2pChatSMP 
+Running P2pChatSMP
 ------------------
 
-A `run` script is provided to save you from classpath issues. It uses the Scala runtime to execute the specified classes. Two instances of the software need to run in parallel, so they can connect to each other and transfer data back and forth. Running both instances on the same machine is possible, but the purpose of this application is to bridge clients located behind firewals. Example setup: two PC's, one connected via DSL, one connected via 3G-card or via smartphone tethering. P2pChatSMP works just like P2pBase (see: https://github.com/mehrvarz/P2pCore), by establishing a direct p2p link between two clients. But instead of using pre-exchanged public RSA keys for end-to-end encryption, OTR messaging and SMP are being offered.
+A `run` script is provided to save you from classpath issues. `run` uses the Scala runtime to execute the specified class. Two instances of P2pChatSMP need to run in parallel, so they can connect to each other and transfer data back and forth. Running both instances on the same machine is possible, but the purpose of this application is to bridge clients located behind firewals. Example setup: two PC's, one connected via DSL, one connected via 3G-card or via smartphone tethering. 
+
+P2pChatSMP works just like P2pBase (see: https://github.com/mehrvarz/P2pCore), creating a direct p2p link between two clients. But instead of using pre-exchanged public RSA keys for end-to-end encryption, OTR messaging and SMP are being used.
 
     ./run timur.p2pChatSMP.P2pChatSMP alice.msn.com msn bob@msn.com
     ./run timur.p2pChatSMP.P2pChatSMP bob.msn.com msn alice@msn.com
 
-As soon as the 2nd instance is started a p2p will be established (if technically possible; otherwise a relayed connection will be used). OTR is started automatically. Quoting [Java-OTR](http://www.cypherpunks.ca/otr/) on the use of SMP:
+As soon as the 2nd instance is started a direct P2P link will be established (if technically possible; otherwise a relayed connection will be used). OTR is started automatically. Quoting [Java-OTR](http://www.cypherpunks.ca/otr/) on the use of SMP:
 
     Type any messages (not starting with '/') in either console. The messages 
     will be automatically encrypted. Both the encrypted and the plaintext 
@@ -95,11 +97,11 @@ License
 
 Source code is licensed under the GNU General Public License, Version 3
 
-See [LICENSE](blob/master/LICENSE).
+See [LICENSE](blob/master/LICENSE)
 
 Copyright (C) 2012 timur.mehrvarz@gmail.com
 
-1st-party and 3rd-party code:
+1st-party and 3rd-party code being used:
 
 - P2pCore https://github.com/mehrvarz/P2pCore
 
