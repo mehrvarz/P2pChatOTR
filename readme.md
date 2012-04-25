@@ -40,7 +40,7 @@ How the two instance may be started:
     ./run timur.p2pChatSMP.P2pChatSMP alice.msn.com msn bob@msn.com
     ./run timur.p2pChatSMP.P2pChatSMP bob.msn.com msn alice@msn.com
 
-P2pChatSMP works just like P2pBase (see: https://github.com/mehrvarz/P2pCore). As soon as the 2nd instance has been started, a direct P2P link will be established (if technically possible; otherwise a relayed connection will be used). But instead of using pre-exchanged public RSA keys for end-to-end encryption, OTR messaging and SMP are being used. OTR is started automatically. SMP must be initiated manually. Quoting [Java-OTR](blob/master/README-Java-OTR):
+P2pChatSMP works just like P2pBase (see: https://github.com/mehrvarz/P2pCore). As soon as the 2nd instance has been started, a direct P2P link will be established (if technically possible; otherwise a relayed connection will be used). But instead of using pre-exchanged public RSA keys for end-to-end encryption, OTR messaging and SMP are being used. OTR is started automatically. SMP must be initiated manually. Quoting [Java-OTR](P2pChatSMP/blob/master/README-Java-OTR):
 
     Type any messages (not starting with '/') in either console. The messages 
     will be automatically encrypted. Both the encrypted and the plaintext 
@@ -97,7 +97,7 @@ License
 
 Source code is licensed under the GNU General Public License, Version 3
 
-See [LICENSE](blob/master/LICENSE)
+See [LICENSE](P2pChatSMP/blob/master/LICENSE)
 
 Copyright (C) 2012 timur.mehrvarz@gmail.com
 
