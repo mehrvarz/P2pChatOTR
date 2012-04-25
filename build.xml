@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<project default="compile" basedir=".">
+  <target name="compile">
+    <mkdir dir="build"/>
+    <javac srcdir="./src"
+           destdir="./build"
+           debug="yes"
+           verbose="no">
+      <compilerarg value="-Xlint"/>
+    </javac>
+  </target>
+</project>
