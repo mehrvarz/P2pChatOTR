@@ -1,7 +1,7 @@
-P2pChatSMP - Peer-to-peer Chat
-==============================
+P2pChatSMP
+==========
 
-P2pChatSMP is a P2P console chat application for clients located behind firewalls. It supports Off-the-Record Messaging and the Socialist Millionairs' Protocol implemented by Java-OTR.
+P2pChatSMP is a peer-to-peer console chat application for clients located behind firewalls. It supports end-to-end encryption with Off-the-Record Messaging and Socialist Millionairs' Protocol, implemented using Java-OTR.
 
 
 System requirements
