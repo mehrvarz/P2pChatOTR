@@ -1,7 +1,7 @@
 P2pChatSMP
 ==========
 
-P2pChatSMP is a secure peer-to-peer chat application for clients located behind firewalls. You don't need a host account (XMPP or other) to use this application. P2pChatSMP implements end-to-end encryption with Off-the-Record Messaging and Socialist Millionairs' Protocol.
+P2pChatSMP is a secure peer-to-peer chat application for clients located behind firewalls. You don't need a host account (XMPP or other) to use this application. P2pChatSMP implements end-to-end encryption with [Off-the-Record Messaging](http://de.wikipedia.org/wiki/Off-the-Record_Messaging) and [Socialist Millionaire' Protocol](http://en.wikipedia.org/wiki/Socialist_millionaire).
 
 
 System requirements
@@ -28,7 +28,7 @@ P2pChatSMP works similar to P2pBase (see: https://github.com/mehrvarz/P2pCore). 
 
 The first string argument ("paris") will be used to match the two clients. The second string argument ("texas") will be used as the OTR/SMP secret. Both clients must use the same secret strings.
 
-As soon as a p2p connection has been established, OTR and SMP will be started automatically. Five to ten seconds later, SMN should be completed and a secure and private conversation can take place. To end the application hit Ctrl-C. 
+As soon as a p2p connection has been established, OTR and SMP will be started automatically. Five to ten seconds later, SMP should be complete, so that a secure and private conversation can take place. To end the application hit Ctrl-C. 
 
 Shown below is a P2pChatSMP log of Alice's client instance:
 
