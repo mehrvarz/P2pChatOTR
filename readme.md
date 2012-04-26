@@ -1,58 +1,36 @@
 P2pChatSMP
 ==========
 
-P2pChatSMP is a peer-to-peer console chat application for clients located behind firewalls. It supports end-to-end encryption with Off-the-Record Messaging and Socialist Millionairs' Protocol implemented using Java-OTR.
+P2pChatSMP is a secure peer-to-peer chat application for clients located behind firewalls. You don't need a host account (XMPP or other) to use this application. P2pChatSMP implements end-to-end encryption with Off-the-Record Messaging and Socialist Millionairs' Protocol.
 
 
 System requirements
 -------------------
 
-To build and run this project, the following 3rd party software packages needs to be installed: 
+To build or run P2pChatSMP, the following 3rd party software must be installed:
 
-    Scala 2.9.x, OpenJDK 6, Ant
+    OpenJDK 6, Scala 2.9.x, Ant
 
-On Ubuntu 12.04, for example, you would install:
+On Ubuntu 12.04 you would:
 
     apt-get install scala ant
-
-
-Building from source
---------------------
-
-To build the project, run:
-
-    ./make
-
-`make` script will work in three steps:
-
-  1. compile Java-OTR classes in src/ca/ using ant
-  2. compile P2pChatSMP classes in src/*.scala using scalac
-  3. create P2pChatSMP.jar by running ./makejar script using the JDK jar tool
 
 
 Running P2pChatSMP
 ------------------
 
-A `run` script is provided to save you from classpath issues. `run` uses the Scala runtime to execute the specified class. Two instances of P2pChatSMP need to run in parallel, so they can connect to each other and transfer data back and forth. Running both instances on the same machine is possible, but the purpose of this application is to bridge clients located behind firewals. Example setup: two PC's, one connected via DSL, one connected via 3G-card or via smartphone tethering. 
+The code repository contains the required binaries. A `run` script is provided for convenience. `run` uses the Scala runtime to execute the named class. Two P2pChatSMP instances need to be executed in parallel, so they can connect to each other. Running both instances on the same machine is possible, but the purpose of this application is to bridge clients located behind discrete firewalls. Possible setups: two machines in completely separate locations. Or: two PC's, one connected via DSL or cable, the other one connected via mobile internet.
 
-How the two instances may be started:
+P2pChatSMP works similar to P2pBase (see: https://github.com/mehrvarz/P2pCore). Instead of using pre-exchanged public keys for end-to-end encryption, however, OTR messaging and SMP are being used. P2pChatSMP needs two secret strings on start:
 
-    ./run timur.p2pChatSMP.P2pChatSMP alice.msn.com msn bob@msn.com
-    ./run timur.p2pChatSMP.P2pChatSMP bob.msn.com msn alice@msn.com
+    (Alice) ./run timur.p2pChatSMP.P2pChatSMP paris texas
+    (Bob)   ./run timur.p2pChatSMP.P2pChatSMP paris texas
 
-P2pChatSMP works just like P2pBase (see: https://github.com/mehrvarz/P2pCore). As soon as the 2nd instance has been started, a direct P2P link will be established (if technically possible; otherwise a relayed connection will be used). But instead of using pre-exchanged public RSA keys for end-to-end encryption, OTR messaging and SMP are being used. OTR is started automatically. SMP must be initiated manually. Quoting [Java-OTR](P2pChatSMP/blob/master/README-Java-OTR):
+The first string argument ("paris") will be used to match the two clients. The second string argument ("texas") will be used as the OTR/SMP secret. Both clients must use the same secret strings.
 
-    Type any messages (not starting with '/') in either console. The messages 
-    will be automatically encrypted. Both the encrypted and the plaintext 
-    messages will be displayed.
+As soon as a p2p connection has been established, OTR and SMP will be started automatically. Five to ten seconds later, SMN should be completed and a secure and private conversation can take place. To end the application hit Ctrl-C. 
 
-    If you want to start SMP, type "/is", or "/isq" if you have a suggested
-    question for the other side. The commands to respond to and abort SMP
-    are "/rs" and "/as" respectively.
- 
-    To end the private conversation, type "/disc" (disconnect).
-
-To end the app hit Ctrl-C. Shown below is a P2pChatSMP log of one of the two instances (Alice):
+Shown below is a P2pChatSMP log of Alice's client instance:
 
     P2pChatSMP accountname=alice.msn.com protocol=msn recipient=bob@msn.com
     P2pChatSMP relaySocket.getLocalPort=-1 relayServer=109.74.203.226 relayPort=18771
@@ -61,20 +39,17 @@ To end the app hit Ctrl-C. Shown below is a P2pChatSMP log of one of the two ins
     P2pChatSMP receiveMsgHandler other peer combindedUdpAddress='89.201.71.60:55130|192.168.1.135:55130'
     P2pChatSMP datagramSendThread udpIpAddr='192.168.1.135' udpPortInt=33790 abort
     P2pChatSMP datagramSendThread udpIpAddr='89.201.71.60' udpPortInt=55130 connected
-    (input:) Hello
-    To OTR:5:Hello
-    Injecting message to the recipient:29:Hello
-    From network:326:?OTR:AAICAAAAxIvEqfcXB0I...
-    Injecting message to the recipient:274:?OTR:AAIKAAAAwJWlDTaJP...
+    From network:32:stand up
+    Injecting message to the recipient:326:?OTR:AAICAAAAxPaF08CY3FVioRfrGCgEvJ...
+    From OTR:8:stand up
+    From network:274:?OTR:AAIKAAAAwNvZMcndXAqJDvdqd/p9aWtEHKKyN...
     From network:690:?OTR:AAIRAAAAENsQ4J2Rx8Nq...
     New fingerprint is created.
     Writing fingerprints.
     Updating context list.
     AKE succeeded
+    P2pChatSMP goneSecure -> init OMP with smpSecret=berlin
     Injecting message to the recipient:666:?OTR:AAISAAAB0tUvh3ZcWUOHl40...
-    (input:) /is
-    Please input the secret
-    (input:) Berlin
     Injecting message to the recipient:991:?OTR,1,2,?OTR:AAIDAQAAAAEAAAABAAAAwDA...
     Injecting message to the recipient:515:?OTR,2,2,4C7tqiIkJV//ZdC8jimctJHJhd7...
     From network:991:?OTR,1,3,?OTR:AAIDAQAAAAEAAAACAAAAw...
@@ -87,24 +62,54 @@ To end the app hit Ctrl-C. Shown below is a P2pChatSMP log of one of the two ins
     From network:942:?OTR:AAIDAQAAAAIAAAADAAAA...
     Writing fingerprints.
     SMP succeeded.
-    From OTR:0:
-    (input:) Hi there...
-    To OTR:11:Hi there...
-    Injecting message to the recipient:390:?OTR:AAIDAAAAAAMAAAADAAAAwMyTRhBvrwoadr...
+    P2pChatSMP ************* SMP succeeded ***************
 
-License
--------
 
-Source code is licensed under the GNU General Public License, Version 3
+Building from source
+--------------------
 
-See [LICENSE](P2pChatSMP/blob/master/LICENSE)
+To build the project, run:
 
-Copyright (C) 2012 timur.mehrvarz@gmail.com
+    ./make
 
-1st-party and 3rd-party code being used:
+`make` script will work three steps:
 
-- P2pCore https://github.com/mehrvarz/P2pCore
+1. compile Java-OTR classes located in src/ca/ using ant and javac
+2. compile P2pChatSMP classes located in src/ using scalac
+3. create P2pChatSMP.jar by running ./makejar script
 
-- Java-OTR http://www.cypherpunks.ca/otr/
+
+Licenses
+--------
+
+- P2pChatSMP, P2pCore source code and library
+
+  licensed under the GNU General Public [LICENSE](P2pChatSMP/blob/master/licenses/LICENSE), Version 3.
+
+  Copyright (C) 2012 timur.mehrvarz@gmail.com
+
+  https://github.com/mehrvarz/P2pChatSMP
+
+  https://github.com/mehrvarz/P2pCore
+
+- The Java Off-the-Record Messaging library
+
+  covered by the LGPL [LICENSE](P2pChatSMP/blob/master/licenses/java-otr/COPYING).
+
+  [README](P2pChatSMP/blob/master/licenses/java-otr/README)
+
+  http://www.cypherpunks.ca/otr/
+  
+- Bouncy Castle 
+
+  http://bouncycastle.org/
+
+- Google Protobuf 
+
+  https://code.google.com/p/protobuf/
+
+- Apache Commons-codec 
+
+  http://commons.apache.org/codec/
 
 
