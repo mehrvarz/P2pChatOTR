@@ -62,6 +62,21 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
   val esc2 = ""
   val esc3 = ""
 
+  def otrMsgSend(str:String) {
+		//log(esc1+"To OTR:"+str.length+":"+esc2+str)
+		if(str!=null && str.length>0) {
+		  log("> "+str)
+		  val tlvs = new Array[OTRTLV](1)
+		  tlvs(0) = new TLV(9, "TestTLV".getBytes)
+		  otrInterface.messageSending(accountname, protocol, recipient,
+				  str, tlvs, Policy.FRAGMENT_SEND_ALL, otrCallbacks)
+		  /*if(str.length()!=0){
+			  log(esc1+"To network:"+str.length()+":"+esc3+str+esc2);
+			  otrContext.fragmentAndSend(str,  otrCallbacks);
+		  }*/
+		}
+  } 
+
   /** p2p connected now (if relayBasedP2pCommunication is set, p2p is relayed; else it is direct) */
   override def p2pSendThread() {
 
@@ -72,21 +87,6 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
       otrMsgSend(firstMessage)
     }
 
-    def otrMsgSend(str:String) {
-			//log(esc1+"To OTR:"+str.length+":"+esc2+str)
-			if(str!=null && str.length>0) {
-			  log("> "+str)
-			  val tlvs = new Array[OTRTLV](1)
-			  tlvs(0) = new TLV(9, "TestTLV".getBytes)
-			  otrInterface.messageSending(accountname, protocol, recipient,
-					  str, tlvs, Policy.FRAGMENT_SEND_ALL, otrCallbacks)
-			  /*if(str.length()!=0){
-				  log(esc1+"To network:"+str.length()+":"+esc3+str+esc2);
-				  otrContext.fragmentAndSend(str,  otrCallbacks);
-			  }*/
-			}
-    }
-    
   	val bufferedReader = new BufferedReader(new InputStreamReader(System.in))
 		while(!p2pQuitFlag) {
 			try {
