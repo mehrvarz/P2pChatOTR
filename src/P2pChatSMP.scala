@@ -54,34 +54,9 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
       super.log(str)
   }
 
-/*
-  // use this method only if running from within a runnable jar
-  override def initHostPubKey() {
-  	val relayKeyPathInRunnableJar = "/relaykey.pub"
-  	//log("initHostPubKey read relayKeyPathInRunnableJar="+relayKeyPathInRunnableJar)
-    val is = getClass.getResourceAsStream(relayKeyPathInRunnableJar)
-  	if(is==null) {
-    	log("initHostPubKey failed to read relayKeyPathInRunnableJar="+relayKeyPathInRunnableJar)
-      hostPubKey = io.Source.fromFile("relaykey.pub").mkString
-      if(hostPubKey.length>0)
-      	log("initHostPubKey from filesystem="+hostPubKey.substring(0,math.min(60,hostPubKey.length)))
-  	} else {
-      hostPubKey = io.Source.fromInputStream(is).mkString
-      if(hostPubKey.length>0)
-        log("initHostPubKey from runnableJar="+hostPubKey.substring(0,math.min(60,hostPubKey.length)))
-    }
-    if(hostPubKey.length<=0)
-      log("initHostPubKey failed to read keyFile")
-  }
-*/
-
 //val esc1 = "\033[31m"
 //val esc2 = "\033[0m"
 //val esc3 = "\033[35m"
-
-//val esc1 = "{"
-//val esc2 = "} "
-//val esc3 = "=="
 
   val esc1 = "  "
   val esc2 = ""
