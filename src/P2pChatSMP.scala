@@ -58,7 +58,7 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
 //val esc2 = "\033[0m"
 //val esc3 = "\033[35m"
 
-  val esc1 = "  "
+  val esc1 = ""
   val esc2 = ""
   val esc3 = ""
 
@@ -81,7 +81,7 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
   override def p2pSendThread() {
 
     if(publicUdpAddrString>otherUdpAddrString) {
-      val firstMessage = "stand up"
+      val firstMessage = "start"
       log("send first msg: '"+firstMessage+"'")
       // client A will send msg to get to "AKE succeeded" state, where the other client will do initiateSmp()
       otrMsgSend(firstMessage)
