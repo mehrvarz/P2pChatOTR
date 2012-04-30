@@ -16,6 +16,7 @@
 
 package timur.p2pChatSMP
 
+import java.security.{ Security, MessageDigest }
 import java.io.{ BufferedReader, InputStreamReader }
 import ca.uwaterloo.crysp.otr.{ UserState, TLV }
 import ca.uwaterloo.crysp.otr.iface.{ OTRTLV, Policy }
@@ -46,6 +47,18 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
   
   matchSource = p2pSecret
   matchTarget = p2pSecret
+
+  override def start() :Int = {
+    init
+    return super.start
+  }
+
+  /**
+   * prepare org.bouncycastle.crypto.encodings.PKCS1Encoding in RsaEncrypt/RsaDecrypt
+   */
+  def init() {
+    Security.addProvider(new ext.org.bouncycastle.jce.provider.BouncyCastleProvider())
+  }
 
   override def log(str:String) {
     if(parent!=null) 
@@ -130,6 +143,16 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
 
   /** received data string from the remote client per UDP (or via relay server as a fallback) */
   override def p2pReceiveHandler(str:String, host:String, port:Int) {
+/*
+    // disconnect our relay connection (stay connected via direct p2p)
+    if(relaySocket!=null && !relayBasedP2pCommunication) {
+      log("relaySocket.close")
+      relayQuitFlag=true
+      relaySocket.close
+      relaySocket=null
+      //activityMsgHandler.obtainMessage(P2pChatService.ACTIVITY_MSG_CONNECT_STATE_RELAY, 0, -1, null).sendToTarget
+    }
+*/
 		log(esc1+"From network:"+str.length+":"+esc3+str.substring(0,math.min(str.length,60))+esc2)
 		val stringTLV = otrInterface.messageReceiving(accountname, protocol, recipient, str, otrCallbacks)
 		if(stringTLV!=null){
@@ -150,11 +173,11 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
     super.relayQuit
   }
 
+  /** received data string via relay server */
 /*
+  // in p2p mode, this is not being used: all data goes to p2pReceiveHandler (even if relayed as a fallback)
   // todo: test this with relay fallback again
   override def relayReceiveHandler(str:String) {
-    // we receive data via (or from) the relay server 
-    // in p2p mode, this is not being used: all data goes to p2pReceiveHandler (even if relayed as a fallback)
     log("relayReceiveHandler str='"+str+"' UNEXPECTED IN P2P MODE ###########")
   }
 */
@@ -189,11 +212,13 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
 	  }
 
 	  def maxMessageSize(context:OTRContext) :Int = {
+	    // todo: verify value
 		  return 1000
 	  }
 
 	  def newFingerprint(us:OTRInterface, accountname:String , protocol:String, 
 	                     username:String, fingerprint:Array[Byte]) {
+	    // todo: show fingerprint
 		  log(esc1+"New fingerprint is created."+esc2)
 	  }
 
@@ -210,7 +235,6 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
 	  }
 
 	  def errorMessage(context:OTRContext, err_code:Int) :String = {
-
 		  if(err_code==OTRCallbacks.OTRL_ERRCODE_MSG_NOT_IN_PRIVATE)
 			  return "You sent an encrypted message, but we finished the private conversation."
 		  return null

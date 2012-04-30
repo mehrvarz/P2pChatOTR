@@ -67,7 +67,7 @@ implements ca.uwaterloo.crysp.otr.crypt.DSAPublicKey {
 	public JCADSAPublicKey(BigInteger p, BigInteger q, BigInteger g,
 			BigInteger y) throws Exception{
 		DSAPublicKeySpec pubspec = new DSAPublicKeySpec(y, p, q, g);
-		java.security.KeyFactory kfac = java.security.KeyFactory.getInstance("DSA", "SUN");
+		java.security.KeyFactory kfac = java.security.KeyFactory.getInstance("DSA"); //, "SUN");
 		this.pk=(java.security.interfaces.DSAPublicKey) kfac
 						.generatePublic(pubspec);
 	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -92,7 +92,7 @@ implements ca.uwaterloo.crysp.otr.crypt.DSAPublicKey {
 				JCAMPI.fromTrimmedBytes(p.getValue()),
 				JCAMPI.fromTrimmedBytes(q.getValue()),
 				JCAMPI.fromTrimmedBytes(g.getValue()));
-		java.security.KeyFactory kfac = java.security.KeyFactory.getInstance("DSA", "SUN");
+		java.security.KeyFactory kfac = java.security.KeyFactory.getInstance("DSA"); //, "SUN");
 		this.pk=(java.security.interfaces.DSAPublicKey) kfac
 						.generatePublic(pubspec);
 	    ByteArrayOutputStream baos = new ByteArrayOutputStream();

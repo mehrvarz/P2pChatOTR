@@ -39,7 +39,7 @@ public class JCADSAKeyPairGenerator extends ca.uwaterloo.crysp.otr.crypt.DSAKeyP
 	    try {
 		    keyGen = java.security.KeyPairGenerator.getInstance("DSA");
 			java.security.SecureRandom random =
-				java.security.SecureRandom.getInstance("SHA1PRNG", "SUN");
+				java.security.SecureRandom.getInstance("SHA1PRNG"); //"SUN");
 			    
 		    keyGen.initialize(1024, random);
 		    java.security.KeyPair pair = keyGen.generateKeyPair();
@@ -60,8 +60,10 @@ public class JCADSAKeyPairGenerator extends ca.uwaterloo.crysp.otr.crypt.DSAKeyP
     		);
 	    } catch (NoSuchAlgorithmException e) {
 	    	throw new OTRCryptException(e.getMessage());
+/*
 	    } catch (NoSuchProviderException e) {
 	    	throw new OTRCryptException(e.getMessage());
+*/
 		}
 	}
 	

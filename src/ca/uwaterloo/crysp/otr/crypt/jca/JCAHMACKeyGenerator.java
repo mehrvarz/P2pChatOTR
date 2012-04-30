@@ -40,7 +40,7 @@ public class JCAHMACKeyGenerator extends ca.uwaterloo.crysp.otr.crypt.HMACKeyGen
 		    try {
 				keyGen = javax.crypto.KeyGenerator.getInstance("HmacSHA1");
 				java.security.SecureRandom random =
-					java.security.SecureRandom.getInstance("SHA1PRNG", "SUN");
+					java.security.SecureRandom.getInstance("SHA1PRNG"); //, "SUN");
 				    
 			    keyGen.init(1024, random);
 			    java.security.Key key = keyGen.generateKey();
@@ -49,8 +49,10 @@ public class JCAHMACKeyGenerator extends ca.uwaterloo.crysp.otr.crypt.HMACKeyGen
 	    		);		    
 		    }catch (NoSuchAlgorithmException e){
 		    	throw new OTRCryptException(e.getMessage());
+/*
 		    }catch (NoSuchProviderException e){
 		    	throw new OTRCryptException(e.getMessage());
+*/
 		    }
 	}
 }
