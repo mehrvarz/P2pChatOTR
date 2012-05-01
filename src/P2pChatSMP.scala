@@ -277,6 +277,8 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
 		  else if(smpEvent == OTRCallbacks.OTRL_SMPEVENT_FAILURE) {
 			  //log(esc1+"SMP failed."+esc2)
         log("************* SMP failed ***************")
+          // todo: need to abort...
+          p2pQuit(true)
 			}
 
 	  }
