@@ -43,12 +43,14 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
   // Generate the keys
   val otrInterface = new UserState(new ca.uwaterloo.crysp.otr.crypt.jca.JCAProvider())
 	val otrContext = otrInterface.getContext(accountname, protocol, recipient)
-  val otrCallbacks = new LocalCallback(this, otrContext)
+  var otrCallbacks = new LocalCallback(this, otrContext)
+//var otrCallbacks:LocalCallback = null
   
   matchSource = p2pSecret
   matchTarget = p2pSecret
 
   override def start() :Int = {
+//  otrCallbacks = new LocalCallback(this, otrContext)
     init
     return super.start
   }
@@ -165,13 +167,15 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
   }
 
   /** bring the relay connection down */
+/*
   override def relayQuit() {
     // we also want to bring p2p down
     // todo: this is not wise, if we bring down relay link while we are still using p2p link
-    log("relayQuit -> p2pQuitFlag=true")
-    p2pQuitFlag=true
+    //log("relayQuit -> p2pQuitFlag=true")
+    //p2pQuitFlag=true
     super.relayQuit
   }
+*/
 
   /** received data string via relay server */
 /*
