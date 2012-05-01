@@ -1,7 +1,7 @@
 P2pChatSMP
 ==========
 
-P2pChatSMP is a peer-to-peer chat application for clients located behind firewalls. P2pChatSMP uses [Off-the-Record Messaging](http://en.wikipedia.org/wiki/Off-the-Record_Messaging) and [Socialist Millionaire' Protocol](http://en.wikipedia.org/wiki/Socialist_millionaire) to implement end-to-end encryption, so your conversations are secure and private. No host account (XMPP or other) is needed to use P2pChatSMP. Because you will never 'log in' to any service, your usage patterns will be much harder to track.
+P2pChatSMP is a peer-to-peer chat application for clients located behind firewalls. P2pChatSMP uses [Off-the-Record Messaging](http://en.wikipedia.org/wiki/Off-the-Record_Messaging) and [Socialist Millionaire' Protocol](http://en.wikipedia.org/wiki/Socialist_millionaire) to implement end-to-end encryption, so your conversations are secure and private. No host account (XMPP or other) is needed to use P2pChatSMP. Because you will never log in to any service, your usage patterns will be much harder to track.
 
 
 System requirements
