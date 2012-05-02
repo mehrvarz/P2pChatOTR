@@ -44,13 +44,11 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
   val otrInterface = new UserState(new ca.uwaterloo.crysp.otr.crypt.jca.JCAProvider())
 	val otrContext = otrInterface.getContext(accountname, protocol, recipient)
   var otrCallbacks = new LocalCallback(this, otrContext)
-//var otrCallbacks:LocalCallback = null
   
   matchSource = p2pSecret
   matchTarget = p2pSecret
 
   override def start() :Int = {
-//  otrCallbacks = new LocalCallback(this, otrContext)
     init
     return super.start
   }
@@ -145,7 +143,6 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
 
   /** received data string from the remote client per UDP (or via relay server as a fallback) */
   override def p2pReceiveHandler(str:String, host:String, port:Int) {
-/*
     // disconnect our relay connection (stay connected via direct p2p)
     if(relaySocket!=null && !relayBasedP2pCommunication) {
       log("relaySocket.close")
@@ -154,7 +151,7 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
       relaySocket=null
       //activityMsgHandler.obtainMessage(P2pChatService.ACTIVITY_MSG_CONNECT_STATE_RELAY, 0, -1, null).sendToTarget
     }
-*/
+
 		log(esc1+"From network:"+str.length+":"+esc3+str.substring(0,math.min(str.length,60))+esc2)
 		val stringTLV = otrInterface.messageReceiving(accountname, protocol, recipient, str, otrCallbacks)
 		if(stringTLV!=null){
@@ -165,17 +162,6 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
 			}
 		}
   }
-
-  /** bring the relay connection down */
-/*
-  override def relayQuit() {
-    // we also want to bring p2p down
-    // todo: this is not wise, if we bring down relay link while we are still using p2p link
-    //log("relayQuit -> p2pQuitFlag=true")
-    //p2pQuitFlag=true
-    super.relayQuit
-  }
-*/
 
   /** received data string via relay server */
 /*
