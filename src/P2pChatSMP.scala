@@ -149,7 +149,6 @@ class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.Log
       relayQuitFlag=true
       relaySocket.close
       relaySocket=null
-      //activityMsgHandler.obtainMessage(P2pChatService.ACTIVITY_MSG_CONNECT_STATE_RELAY, 0, -1, null).sendToTarget
     }
 
 		log(esc1+"From network:"+str.length+":"+esc3+str.substring(0,math.min(str.length,60))+esc2)
