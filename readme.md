@@ -95,7 +95,7 @@ Licenses
 
   covered by the LGPL [LICENSE](P2pChatOTR/blob/master/licenses/java-otr/COPYING).
 
-  [README](P2pChatOTR/blob/master/licenses/java-otr/README)
+  java-otr [README](P2pChatOTR/blob/master/licenses/java-otr/README)
 
   http://www.cypherpunks.ca/otr/
   
