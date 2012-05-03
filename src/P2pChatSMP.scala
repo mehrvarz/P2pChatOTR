@@ -1,5 +1,5 @@
 /*
- * This file is part of P2pChatSMP
+ * This file is part of P2pChatOTR
  *
  * Copyright (C) 2012 Timur Mehrvarz, timur.mehrvarz(at)gmail.com
  *
@@ -14,7 +14,7 @@
  * version 3 of the License, or (at your option) any later version.
  */
 
-package timur.p2pChatSMP
+package timur.p2pChat
 
 import java.security.{ Security, MessageDigest }
 import java.io.{ BufferedReader, InputStreamReader }
@@ -24,23 +24,22 @@ import ca.uwaterloo.crysp.otr.iface.{ OTRContext, OTRInterface, OTRCallbacks }
 
 import timur.p2pCore._
 
-object P2pChatSMP {
+object P2pChatOTR {
   def main(args:Array[String]): Unit = {
     if(args.length<2) {
       println("arg1: p2pSecret")
       println("arg2: smpSecret")
       return
     }
-    new P2pChatSMP(args(0),args(1), null).start
+    new P2pChatOTR(args(0),args(1), null).start
   }
 }
 
-class P2pChatSMP(p2pSecret:String, smpSecret:String, parent:timur.p2pChatSMP.LogClassTrait) extends P2pBase {
-  val accountname="dummy"
-  val protocol="dummy"
-  val recipient="dummy"
+class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogClassTrait) extends P2pBase {
+  val accountname = "dummy"
+  val protocol = "dummy"
+  val recipient = "dummy"
 
-  // Generate the keys
   val otrInterface = new UserState(new ca.uwaterloo.crysp.otr.crypt.jca.JCAProvider())
 	val otrContext = otrInterface.getContext(accountname, protocol, recipient)
   var otrCallbacks = new LocalCallback(this, otrContext)

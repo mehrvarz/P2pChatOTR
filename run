@@ -1,1 +1,1 @@
-scala -classpath P2pChatSMP.jar:lib/p2pCore.jar:lib/bcprov-jdk15on-147-ext.jar:lib/commons-codec-1.6.jar:lib/protobuf-java-2.3.0.jar $*
+scala -classpath P2pChatOTR.jar:lib/p2pCore.jar:lib/bcprov-jdk15on-147-ext.jar:lib/commons-codec-1.6.jar:lib/protobuf-java-2.3.0.jar $*

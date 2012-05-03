@@ -1,2 +1,2 @@
-cd build && jar cf ../P2pChatSMP.jar * && cd ..
+cd build && jar cf ../P2pChatOTR.jar * && cd ..
 

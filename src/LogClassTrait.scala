@@ -1,5 +1,5 @@
 /*
- * This file is part of P2pChatSMP
+ * This file is part of P2pChatOTR
  *
  * Copyright (C) 2012 Timur Mehrvarz, timur.mehrvarz(at)gmail.com
  *
@@ -9,7 +9,7 @@
  * version 3 of the License, or (at your option) any later version.
  */
 
-package timur.p2pChatSMP
+package timur.p2pChat
 
 trait LogClassTrait { 
   def log(msg:String)
