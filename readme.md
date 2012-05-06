@@ -1,7 +1,7 @@
 P2pChatOTR
 ==========
 
-P2pChatOTR is a peer-to-peer chat application for clients located behind firewalls. P2pChatOTR uses [Off-the-Record Messaging](http://en.wikipedia.org/wiki/Off-the-Record_Messaging) and [Socialist Millionaire' Protocol](http://en.wikipedia.org/wiki/Socialist_millionaire) to implement end-to-end encryption, so your conversations are secure and private. No host account (XMPP or other) is needed to use P2pChatOTR. Because you will never log in to any service, your usage patterns will be much harder to track.
+P2pChatOTR is a peer-to-peer chat application for clients located behind firewalls. P2pChatOTR uses [Off-the-Record Messaging](http://en.wikipedia.org/wiki/Off-the-Record_Messaging) and [Socialist Millionaire' Protocol](http://en.wikipedia.org/wiki/Socialist_millionaire) to implement end-to-end encryption, so your conversations are secure and private. No host account (XMPP or other) is required to use P2pChatOTR. This simplifies usage and makes it also more difficult for anyone to track your usage patterns.
 
 
 System requirements
@@ -23,16 +23,15 @@ The code repository contains the required binaries. A `run` script is provided f
 
 P2pChatOTR works similar to P2pBase (see: https://github.com/mehrvarz/P2pCore). Instead of using pre-exchanged public keys for end-to-end encryption, however, OTR messaging and OTR are being used. P2pChatOTR needs two secret strings on start:
 
-    (Alice) ./run timur.p2pChat.P2pChatOTR paris texas
-    (Bob)   ./run timur.p2pChat.P2pChatOTR paris texas
+    (Alice) ./run paris texas
+    (Bob)   ./run paris texas
 
-The first string argument ("paris") will be used to match the two clients. The second string argument ("texas") will be used as the OTR/SMP secret. Both clients must use the same secret strings.
+The first string argument ("paris") will be used to match the two clients. The second string argument ("texas") will be used as OTR/SMP secret. Both clients must use the exact same secret words.
 
-As soon as a p2p connection has been established, OTR and SMP will be started automatically. Five to ten seconds later, SMP should be complete, so that a secure and private conversation can take place. To end the application hit Ctrl-C. 
+As soon as a p2p connection has been established, OTR and SMP will be automatically started. A couple of seconds later, SMP should be complete ("*** SMP succeeded ***") and a secure conversation can take place. To end the application hit Ctrl-C. 
 
 Shown below is a P2pChatOTR log of Alice's client instance:
 
-    P2pChatOTR accountname=alice.msn.com protocol=msn recipient=bob@msn.com
     P2pChatOTR relaySocket.getLocalPort=-1 relayServer=109.74.203.226 relayPort=18771
     P2pChatOTR receiveHandler send encrypted initialMsg='...'
     P2pChatOTR combinedUdpAddrString this peer udpAddress=89.201.71.60:33790|192.168.1.135:33790
@@ -48,7 +47,7 @@ Shown below is a P2pChatOTR log of Alice's client instance:
     Writing fingerprints.
     Updating context list.
     AKE succeeded
-    P2pChatOTR goneSecure -> init OMP with smpSecret=berlin
+    P2pChatOTR goneSecure -> init OMP with smpSecret=word
     Injecting message to the recipient:666:?OTR:AAISAAAB0tUvh3ZcWUOHl40...
     Injecting message to the recipient:991:?OTR,1,2,?OTR:AAIDAQAAAAEAAAABAAAAwDA...
     Injecting message to the recipient:515:?OTR,2,2,4C7tqiIkJV//ZdC8jimctJHJhd7...
@@ -81,7 +80,7 @@ To build the project, run:
 Licenses
 --------
 
-- P2pChatOTR, P2pCore source code and library
+- P2pChatOTR, P2pCore source code and libraries
 
   licensed under the GNU General Public [LICENSE](P2pChatOTR/blob/master/licenses/LICENSE), Version 3.
 
