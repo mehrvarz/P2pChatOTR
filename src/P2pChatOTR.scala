@@ -52,11 +52,6 @@ class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogCla
 
   override def start() :Int = {
     init
-/*
-    var ret = readkeys
-    if(ret!=0)
-      return ret
-*/
     return super.start
   }
 
@@ -73,59 +68,6 @@ class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogCla
     else
       super.log(str)
   }
-
-/*
-  def readkeys() :Int = {
-    // create folder for remote keys
-    new java.io.File(keyFolderPath).mkdir
-    val fullLocalKeyName = keyFolderPath+"/key.pub"
-
-    try {
-      // load local key pair
-      log("readkeys fullLocalKeyName="+fullLocalKeyName+" used for fingerprint matching")
-      pubKeyLocal = io.Source.fromFile(fullLocalKeyName).mkString
-      log("readkeys read private key from private folder")
-      privKeyLocal = io.Source.fromInputStream(openFileInput("key")).mkString
-
-    } catch {
-      case ex:Exception =>
-        // generate local key pair
-        log("readkeys generating local key pair")
-        val keyPair = RsaKeyGenerate.rsaKeyGenerate
-        privKeyLocal = Base64.encode(keyPair.getPrivate.getEncoded)
-        pubKeyLocal = Base64.encode(keyPair.getPublic.getEncoded)
-
-        // delete old private key
-        val privateKeyFile = getFileStreamPath("key")
-        if(privateKeyFile!=null) {
-          log("readkeys privateKeyFile="+privateKeyFile.getAbsolutePath)
-          if(privateKeyFile.exists) {
-            log("readkeys privateKeyFile delete")
-            privateKeyFile.delete
-          }
-        }
-
-        // write new private key in private directory
-        AndrTools.runOnUiThread(activity) { () =>
-          Toast.makeText(activity, "creating new private and public keys", Toast.LENGTH_LONG).show
-        }
-        log("readkeys write new private key")
-        // todo: send a toast in addition
-        val fileOutputStream2 = openFileOutput("key", Context.MODE_PRIVATE)
-        fileOutputStream2.write(privKeyLocal.getBytes)
-        fileOutputStream2.close
-
-        // write new public key in public keyFolderPath
-        log("readkeys write new public key; len="+pubKeyLocal.length)
-        Tools.writeToFile(keyFolderPath+"/key.pub", pubKeyLocal)
-    }
-
-    if(buildMatchStrings!=0)
-      return -2
-      
-    return 0
-  }
-*/
 
 //val esc1 = "\033[31m"
 //val esc2 = "\033[0m"
@@ -244,66 +186,6 @@ class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogCla
   }
 */
 
-  /**
-   * p2pReceivePreHandler is called as soon as p2p data was encrypted
-   * will process special commands, such as "//requestPubKeyFingerprint", "//pubKeyFingerprint=...", "//check", "//ack", "//quit"
-   */
-  override def p2pReceivePreHandler(str:String) {
-    //log("p2pReceivePreHandler P2pChatOTR reset msgMsRcv; receiving=["+str+"]")
-    if(str=="//requestPubKeyFingerprint") {
-/*
-      log("p2pReceivePreHandler: sending fingerprint of our pubkey on request="+pubKeyLocalFingerprint)
-      // todo: don't have pubKeyLocalFingerprint yet
-      p2pSend("//pubKeyFingerprint="+pubKeyLocalFingerprint)
-*/
-    } else if(str.startsWith("//pubKeyFingerprint=")) {
-      val remoteKeyFingerprint = str.substring(19)
-      log("p2pReceivePreHandler: remoteKeyFingerprint="+remoteKeyFingerprint)
-
-/*
-      // todo: don't have keyFolderPath yet; see readkeys()
-      // todo: pubKeyRemote not a class variable yet
-      // search all stored pub keys for a match to remoteKeyFingerprint
-      pubKeyRemote = null
-      val fileArray = new java.io.File(keyFolderPath).listFiles
-      for(file <- fileArray.iterator.toList) {
-        if(pubKeyRemote==null) {
-          val fileName = file.getName.trim
-          if(fileName.length>4 && fileName.endsWith(".pub") && fileName!="key.pub") {
-            val key = io.Source.fromFile(keyFolderPath+"/"+fileName).mkString
-            val messageDigest = MessageDigest.getInstance("SHA-1")
-            messageDigest.update(Base64.decode(key))
-            val fingerprint = RsaEncrypt.getHexString(messageDigest.digest)
-            if(fingerprint==remoteKeyFingerprint) {
-              log("p2pReceivePreHandler: found stored pubKeyRemote in file "+fileName)
-              pubKeyRemote = key
-            }
-          }
-        }
-      }
-
-      if(pubKeyRemote==null) {
-        // todo: not found pubKeyRemote for remoteKeyFingerprint; request full key delivery
-        p2pSend("//requestPubKey")
-        return
-      }
-      
-      // pubKeyRemote for remoteKeyFingerprint found in local folder; nothing more to do
-
-    } else if(str=="//requestPubKey") {
-      // todo: send full public key
-      // p2pSend("//pubKey="+...)
-
-    } else if(str.startsWith("//pubKey=")) {
-      val remoteKey = str.substring(8)
-      log("p2pReceivePreHandler: remoteKey="+remoteKey)
-      // todo: store remoteKey
-*/
-
-    } else {
-      super.p2pReceivePreHandler(str) // -> p2pReceiveHandler()
-    }
-  }
 
   class LocalCallback(p2pBase:P2pBase, otrContext:OTRContext) extends OTRCallbacks {
 
@@ -311,7 +193,7 @@ class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogCla
 		  if(msg!=null) {
     		log(esc1+"Injecting message to the recipient:"+msg.length+":"+esc3+msg.substring(0,math.min(msg.length,60))+esc2)
 	    	p2pBase.p2pSend(msg)  // ,"rsastr" 
-	    	                      // if we send anything other than default "string", we must implement p2pReceiveMultiplexHandler
+    	            // todo: if we send+receive anything other than default "string", we must implement p2pReceiveMultiplexHandler
 	    }
 	  }
 
@@ -418,7 +300,6 @@ class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogCla
   /** otr encryption now in place */
   def p2pEncryptedCommunication() {
     // start pubkey exchange
-    //p2pSend("//requestPubKeyFingerprint")
     p2pWatchdog
   }
 }
