@@ -299,7 +299,6 @@ class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogCla
 
   /** otr encryption now in place */
   def p2pEncryptedCommunication() {
-    // start pubkey exchange
     p2pWatchdog
   }
 }
