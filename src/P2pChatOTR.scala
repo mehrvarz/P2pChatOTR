@@ -95,7 +95,7 @@ class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogCla
   override def p2pSendThread() {
 
     if(publicUdpAddrString>otherUdpAddrString) {
-      val firstMessage = "start otr/smp..."
+      val firstMessage = "start otr/smp"
       //log("send first msg: '"+firstMessage+"'")
       // client A will send a msg to get to "AKE succeeded" state, where the other client will do initiateSmp()
       otrMsgSend(firstMessage)
@@ -165,14 +165,6 @@ class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogCla
 		}
   }
 
-  /** received data string via relay server */
-/*
-  // in p2p mode, this is not being used: all data goes to p2pReceiveHandler (even if relayed as a fallback)
-  // todo: test this with relay fallback again
-  override def relayReceiveHandler(str:String) {
-    log("relayReceiveHandler str='"+str+"' UNEXPECTED IN P2P MODE ###########")
-  }
-*/
 
 /*
   def p2pReceiveMultiplexHandler(protoMultiplex:P2pCore.Message) {
@@ -207,10 +199,10 @@ class P2pChatOTR(p2pSecret:String, smpSecret:String, parent:timur.p2pChat.LogCla
       if(publicUdpAddrString<otherUdpAddrString) {
     	  // Client B will initiateSmp; on OTRL_SMPEVENT_ASK_FOR_SECRET client A will do respondSmp()
       	if(smpSecret!=null && smpSecret.length>0) {
-          // log("goneSecure -> init OMP with smpSecret="+smpSecret)   // never log the secret
+          log("goneSecure -> init OMP with smpSecret="+smpSecret)   // never log the secret
           otrContext.initiateSmp(smpSecret, otrCallbacks)
         } else {
-          // log("goneSecure -> init OMP with p2pSecret="+p2pSecret)   // never log the secret
+          log("goneSecure -> init OMP with p2pSecret="+p2pSecret)   // never log the secret
           otrContext.initiateSmp(p2pSecret, otrCallbacks)
         }
       }
